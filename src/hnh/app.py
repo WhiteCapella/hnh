@@ -24,7 +24,7 @@ async def create_upload_file(
         prediction = model(img)
 
         # 예측 결과 반환 (클라이언트가 이해하기 쉽도록)
-        return {"prediction": prediction[0]['label']}
+        return {"prediction": prediction}
 
     except Exception as e:
         # 예외 처리

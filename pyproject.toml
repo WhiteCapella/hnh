@@ -1,6 +1,6 @@
 [project]
 name = "hnh"
-version = "0.1.0"
+version = "0.2.0"
 description = "Default template for PDM package"
 authors = [
     {name = "WhiteCapella", email = "elnath1002@naver.com"},
@@ -8,6 +8,9 @@ authors = [
 dependencies = [
     "fastapi>=0.115.0",
     "uvicorn>=0.30.6",
+    "transforms>=0.2.1",
+    "torch>=2.4.1",
+    "tensorflow>=2.17.0",
 ]
 requires-python = ">=3.11"
 readme = "README.md"

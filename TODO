@@ -1,2 +1,7 @@
 # FASTAPI로 predict API 만들기
 # 위 함수를 실행하면 아무 결과가 나오게끔
+
+-- STEP 1 End --
+
+# STEP 2 : Load Deep-Learning Module
+

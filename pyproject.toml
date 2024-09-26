@@ -1,11 +1,18 @@
 [project]
 name = "hnh"
-version = "0.1.0"
+version = "0.2.0"
 description = "Default template for PDM package"
 authors = [
     {name = "WhiteCapella", email = "elnath1002@naver.com"},
 ]
-dependencies = []
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.6",
+    "transforms>=0.2.1",
+    "torch>=2.4.1",
+    "tensorflow>=2.17.0",
+    "tf-keras>=2.17.0",
+]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "GNU"}
@@ -14,6 +21,15 @@ license = {text = "GNU"}
 [tool.pdm]
 distribution = true
 
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=8.3.3",
+]
+local = [
+    "transformers>=4.45.0",
+    "datasets>=3.0.0",
+    "evaluate>=0.4.3",
+]
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"

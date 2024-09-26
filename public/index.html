@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <script>
+        async function uploadImage(event) {
+            event.preventDefault(); // 폼 제출 방지
+            const formData = new FormData(event.target);
+            const response = await fetch('/uploadfile/', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            const label = result.label;
+            const score = result.score; // score 값 받아오기
+
+            console.log('result:', JSON.stringify(result, null, 2));
+            console.log('label:' + label)
+            console.log('score:' + score);
+
+            // 결과에 따라 이미지 변경
+            const resultImage = document.getElementById('resultImage');
+            const resultText = document.getElementById('resultText');
+            
+            resultImage.src = result.image_url; 
+
+            if (score >= 0.8) {
+                resultText.textContent = "I think your image is hot dog";
+            } else {
+                resultText.textContent = "I think your image is not hot dog";
+            }
+            
+        }
+        
+    </script>
+</head>
+<body>
+    <h1>IF HOTDOG</h1>
+
+    <form id="uploadForm" onsubmit="uploadImage(event)">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Here is your image:</h2>
+    <img id="resultImage" src="" width="300"> 
+    <p id="resultText"></p> 
+</body>
+</html>

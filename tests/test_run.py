@@ -1,4 +1,4 @@
-from hnh.utils import get_max_score, get_max_score2, get_max_score3
+from hnh.util import get_max_score, get_max_score2, get_max_score3
 
 def test_max_p_label():
     p = [

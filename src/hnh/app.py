@@ -3,6 +3,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from transformers import pipeline
+from hnh.util import get_max_score2
 import tensorflow as tf
 import os
 import json
@@ -37,7 +38,8 @@ async def create_upload_file(file: UploadFile):
     img = Image.open(io.BytesIO(img))  # 이미지 바이트를 PIL 이미지로 변환
     
     p = model(img)
+    label = get_max_score2(p)
     #{'label': 'hot dog', 'score': 0.54},
     #{'label': 'not hot dog', 'score': 0.46}
 
-    return {"Hello": p}
+    return {"label": label, "p": p}

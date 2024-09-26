@@ -3,7 +3,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from transformers import pipeline
-from hnh.util import get_max_score2
+from hnh.util import get_max_score, get_max_label
 import tensorflow as tf
 import os
 import json
@@ -37,9 +37,24 @@ async def create_upload_file(file: UploadFile):
     from PIL import Image
     img = Image.open(io.BytesIO(img))  # 이미지 바이트를 PIL 이미지로 변환
     
+    filename = f"{uuid.uuid4()}.jpg"
+    upload_folder = "uploads"
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+    with open(os.path.join(upload_folder, filename), "wb") as f:
+        f.write(img)
+
     p = model(img)
-    label = get_max_score2(p)
+    label = get_max_label(p)
+    score = get_max_score(p)
     #{'label': 'hot dog', 'score': 0.54},
     #{'label': 'not hot dog', 'score': 0.46}
+    return {
+        "image_url": f"/uploads/{filename}",  # 이미지 URL
+        "label": label, 
+        "score": score
+    }
 
-    return {"label": label, "p": p}
+@app.get("/uploads/{filename}")
+async def get_uploaded_file(filename: str):
+    return FileResponse(os.path.join("uploads", filename))

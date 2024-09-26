@@ -1,4 +1,4 @@
-def get_max_score(p):
+def get_max_label(p):
   max_score = 0
   max_label = ""
   for item in p:
@@ -6,6 +6,15 @@ def get_max_score(p):
           max_score = item['score']
           max_label = item['label']
   return max_label
+
+def get_max_score(p):
+  max_score = 0
+  max_label = ""
+  for item in p:
+      if item['score'] > max_score:
+          max_score = item['score']
+          max_label = item['label']
+  return max_score
 
 def get_score(item):
   return item['score']

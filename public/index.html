@@ -15,18 +15,26 @@
 
             const result = await response.json();
             const label = result.label;
-            
+            const score = result.score; // score 값 받아오기
+
             console.log('result:', JSON.stringify(result, null, 2));
             console.log('label:' + label)
+            console.log('score:' + score);
 
             // 결과에 따라 이미지 변경
             const resultImage = document.getElementById('resultImage');
-            if (label === 'hot dog') {
-                resultImage.src = "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQweb_7o7OrtlTP75oX2Q_keaoVYgAhMsYVp1sCafoNEdtSSaHps3n7NtNZwT_ufZGPyH7_9MFcao_r8QWr3Fdz17RitvZXLTU4dNsxr73m6V1scsH3_ZZHRw&usqp=CAE"; // Hotdog 이미지
+            const resultText = document.getElementById('resultText');
+            
+            resultImage.src = result.image_url; 
+
+            if (score >= 0.8) {
+                resultText.textContent = "I think your image is hot dog";
             } else {
-                resultImage.src = "https://hearingsense.com.au/wp-content/uploads/2022/01/8-Fun-Facts-About-Your-Dog-s-Ears-1024x512.webp"; // Not hotdog 이미지
+                resultText.textContent = "I think your image is not hot dog";
             }
+            
         }
+        
     </script>
 </head>
 <body>
@@ -38,9 +46,7 @@
     </form>
 
     <h2>Here is your image:</h2>
-    {% if image_url %}
-    <img id="resultImage" src="{{ image_url }}" width="300">
-    {% endif %}
-    
+    <img id="resultImage" src="" width="300"> 
+    <p id="resultText"></p> 
 </body>
 </html>

@@ -5,7 +5,7 @@
 groups = ["default", "local", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:b833d54b84170b40c60aeaf9f286f7c3db80fce83a35bc8faf0ee2b19ff2e730"
+content_hash = "sha256:38c7cf2e17e9dd356fca5ed4616ebc6be1071310a9c8d2d8b20a991608e2c950"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -1589,6 +1589,20 @@ groups = ["default"]
 files = [
     {file = "termcolor-2.4.0-py3-none-any.whl", hash = "sha256:9297c0df9c99445c2412e832e882a7884038a25617c60cea2ad69488d4040d63"},
     {file = "termcolor-2.4.0.tar.gz", hash = "sha256:aab9e56047c8ac41ed798fa36d892a37aca6b3e9159f3e0c24bc64a9b3ac7b7a"},
+]
+
+[[package]]
+name = "tf-keras"
+version = "2.17.0"
+requires_python = ">=3.9"
+summary = "Deep learning for humans."
+groups = ["default"]
+dependencies = [
+    "tensorflow<2.18,>=2.17",
+]
+files = [
+    {file = "tf_keras-2.17.0-py3-none-any.whl", hash = "sha256:cc97717e4dc08487f327b0740a984043a9e0123c7a4e21206711669d3ec41c88"},
+    {file = "tf_keras-2.17.0.tar.gz", hash = "sha256:fda97c18da30da0f72a5a7e80f3eee343b09f4c206dad6c57c944fb2cd18560e"},
 ]
 
 [[package]]

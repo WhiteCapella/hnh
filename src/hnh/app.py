@@ -7,28 +7,11 @@ import tensorflow as tf
 import os
 import json
 import random
+import io
 
 app = FastAPI()
 html = Jinja2Templates(directory="public")
 
-@app.get("/predict")
-async def create_upload_file(
-    file: UploadFile
-):
-    try:
-        # save file
-        img = await file.read()
-        from PIL import Image
-        model = pipeline("image-classification", model = "julien-c/hotdog-not-hotdog")
-        img = Image.open(io.BytesIO(img))
-        prediction = model(img)
-
-        # 예측 결과 반환 (클라이언트가 이해하기 쉽도록)
-        return {"prediction": prediction}
-
-    except Exception as e:
-        # 예외 처리
-        return {"error": str(e)}
 
 @app.get("/")
 async def home(request: Request):
@@ -36,3 +19,25 @@ async def home(request: Request):
     dog = "https://hearingsense.com.au/wp-content/uploads/2022/01/8-Fun-Facts-About-Your-Dog-s-Ears-1024x512.webp"
     image_url = random.choice([hotdog, dog])
     return html.TemplateResponse("index.html",{"request":request, "image_url": image_url})
+
+
+@app.get("/predict")
+def hotdog():
+    model = pipeline("image-classification", model="julien-c/hotdog-not-hotdog") 
+    return {"Hello": random.choice(["hotdog", "not hotdog"])}
+
+
+@app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile):
+    # 파일 저장
+    img = await file.read()
+    model = pipeline("image-classification", model="julien-c/hotdog-not-hotdog")
+    
+    from PIL import Image
+    img = Image.open(io.BytesIO(img))  # 이미지 바이트를 PIL 이미지로 변환
+    
+    p = model(img)
+    #{'label': 'hot dog', 'score': 0.54},
+    #{'label': 'not hot dog', 'score': 0.46}
+
+    return {"Hello": p}

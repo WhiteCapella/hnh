@@ -1,5 +1,6 @@
 from typing import Annotated
 from fastapi import FastAPI, File, UploadFile
+from 
 import os
 
 
@@ -28,4 +29,4 @@ async def create_upload_file(
 
 @app.get("/predict")
 async def predict():
-    print("hello world!")
+    return("hello world!")

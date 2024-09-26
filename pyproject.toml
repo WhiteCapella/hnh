@@ -1,0 +1,19 @@
+[project]
+name = "hnh"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "WhiteCapella", email = "elnath1002@naver.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "GNU"}
+
+
+[tool.pdm]
+distribution = true
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

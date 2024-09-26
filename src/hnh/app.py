@@ -1,14 +1,18 @@
 from typing import Annotated
 from fastapi import FastAPI, File, UploadFile
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import FileResponse
 from fastapi import Request
 from transformers import pipeline
 from hnh.util import get_max_score, get_max_label
+from PIL import Image
 import tensorflow as tf
 import os
 import json
 import random
 import io
+import uuid
+
 
 app = FastAPI()
 html = Jinja2Templates(directory="public")
@@ -31,18 +35,17 @@ def hotdog():
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile):
     # 파일 저장
-    img = await file.read()
+    contents = await file.read()
     model = pipeline("image-classification", model="julien-c/hotdog-not-hotdog")
-    
-    from PIL import Image
-    img = Image.open(io.BytesIO(img))  # 이미지 바이트를 PIL 이미지로 변환
     
     filename = f"{uuid.uuid4()}.jpg"
     upload_folder = "uploads"
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
     with open(os.path.join(upload_folder, filename), "wb") as f:
-        f.write(img)
+        f.write(contents)
+
+    img = Image.open(io.BytesIO(contents))
 
     p = model(img)
     label = get_max_label(p)
